@@ -1,63 +1,54 @@
-Berikut adalah pembaharuan file `README.md` yang disesuaikan dengan transisi ke **Laravel**. Struktur foldernya sekarang menggunakan standar Laravel 11 (atau 10) dengan arsitektur MVC, pemanfaatan Blade templating, dan Clean URLs yang telah kita terapkan.
-
----
-
-```markdown
 # 👘 BANINA - Website Toko Busana Muslim Pria (Laravel Version)
 
 Website katalog busana muslim pria dinamis dengan panel admin lengkap, kini dimigrasikan menggunakan framework Laravel.
-Tema: **Hitam + Emas (Premium)** 🖤✨ | Men Wear Since 2019
+
+**Tema:** Hitam + Emas (Premium) 🖤✨ | *Men Wear Since 2019*
 
 ---
 
 ## 📁 Struktur Folder Utama
 
-
-```
-
+```text
 banina-laravel/
 ├── app/
 │   ├── Http/Controllers/Frontend/
-│   │   ├── HomeController.php     ← Mengelola Beranda, Tentang, & Kontak
-│   │   └── ProductController.php  ← Mengelola Katalog & Detail Produk (Clean URL)
-│   └── Models/                    ← Eloquent Models (Product, Category, Banner, Setting)
+│   │   ├── HomeController.php       ← Mengelola Beranda, Tentang, & Kontak
+│   │   └── ProductController.php    ← Mengelola Katalog & Detail Produk (Clean URL)
+│   └── Models/                      ← Eloquent Models (Product, Category, Banner, Setting)
 ├── bootstrap/
-├── config/                        ← File konfigurasi Laravel
+├── config/                          ← File konfigurasi Laravel
 ├── database/
-│   └── migrations/                ← Migrasi skema database (menggantikan database.sql)
-├── public/                        ← Root web server publik
+│   └── migrations/                  ← Migrasi skema database
+├── public/                          ← Root web server publik
 │   ├── assets/
-│   │   ├── css/style.css          ← Stylesheet utama (tema hitam + emas)
-│   │   └── js/main.js             ← JavaScript frontend
-│   └── uploads/                   ← Folder penyimpanan upload gambar produk & banner
+│   │   ├── css/style.css            ← Stylesheet utama (tema hitam + emas)
+│   │   └── js/main.js               ← JavaScript frontend
+│   └── uploads/                     ← Folder penyimpanan upload gambar produk & banner
 ├── resources/
-│   └── views/                     ← Blade Templating Engine
+│   └── views/                       ← Blade Templating Engine
 │       └── frontend/
-│           ├── layouts/app.blade.php  ← Layout master (termasuk Header & Footer)
+│           ├── layouts/app.blade.php ← Layout master (Header & Footer)
 │           └── pages/
-│               ├── home.blade.php     ← Halaman beranda
-│               ├── catalog.blade.php  ← Halaman katalog + filter kategori & pencarian
-│               ├── product_detail.blade.php ← Halaman detail produk (Multi-image & related)
-│               ├── about.blade.php    ← Halaman tentang kami
-│               └── contact.blade.php  ← Halaman kontak dengan data dinamis
+│               ├── home.blade.php           ← Halaman beranda
+│               ├── catalog.blade.php        ← Halaman katalog + filter & pencarian
+│               ├── product_detail.blade.php ← Halaman detail produk (Multi-image)
+│               ├── about.blade.php          ← Halaman tentang kami
+│               └── contact.blade.php        ← Halaman kontak dengan data dinamis
 ├── routes/
-│   └── web.php                    ← Berisi routing aplikasi & Clean URLs
-└── .env                           ← Konfigurasi environment (Database, URL, dll)
+│   └── web.php                      ← Berisi routing aplikasi & Clean URLs
+└── .env                             ← Konfigurasi environment (Database, URL, dll)
 
-```
+⚙️ Cara Instalasi & Setup lokal
 
----
-
-## ⚙️ Cara Instalasi & Setup lokal
-
-### 1. Prasyarat Sistem
+1. Prasyarat Sistem
 - PHP 8.2+
 - Composer
 - MySQL 8.0+ / MariaDB
 - Web Server (Apache/Nginx/Laragon)
 
-### 2. Kloning dan Instalasi Dependensi
+2. Kloning dan Instalasi Dependensi
 Masuk ke direktori project, lalu jalankan composer untuk menginstal semua library:
+
 ```bash
 composer install
 
@@ -164,20 +155,8 @@ Sistem navigasi telah diubah dari berkstensi `.php` native menjadi route berbasi
 
 ## 🛠️ Tech Stack
 
-* **Backend**: Laravel 11.x / 10.x (Framework PHP MVC)
+* **Backend**: Laravel 12.x / 10.x (Framework PHP MVC)
 * **Database**: MySQL dengan Eloquent ORM & Query Builder
 * **Frontend**: HTML5, CSS3 (Custom Variables), Vanilla JS
 * **Template Engine**: Laravel Blade Components
 * **Icons & Fonts**: Font Awesome 6, Playfair Display, Cormorant Garamond, DM Sans
-
----
-
-> Dibuat untuk **BANINA Men Wear** 🖤 — Men Wear Since 2019
-
-```
-
----
-
-Sekarang berkas README Anda sudah mencerminkan struktur modern berbasis Laravel! Jika Anda sudah siap, kita bisa lanjut merombak halaman **Dashboard Admin** beserta autentikasinya.
-
-```
