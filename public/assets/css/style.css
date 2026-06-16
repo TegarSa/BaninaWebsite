@@ -30,6 +30,33 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Custom Scrollbar (Chrome, Safari, Edge, Opera) */
+::-webkit-scrollbar {
+    width: 20px;
+    height: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--black); 
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold-dim); 
+    border-radius: 5px;
+    border: 2px solid var(--black); 
+    transition: var(--transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold); 
+}
+
+/* Custom Scrollbar (Firefox) */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-dim) var(--black);
+}
+
 body {
     font-family: 'DM Sans', sans-serif;
     background: var(--white);

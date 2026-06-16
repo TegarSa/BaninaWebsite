@@ -36,11 +36,10 @@
             @endif
         </div>
         
-        <div class="about-img">
+       <div class="about-img">
             @if($aboutImg)
-                {{-- Jalur gambar langsung diarahkan ke public/assets/images/ --}}
-                <img src="{{ asset('assets/images/about/' . $aboutImg) }}" alt="Tentang {{ config('app.name', 'BANINA') }}"
-                     style="width:100%;height:420px;object-fit:cover;border-radius:14px;border:1px solid rgba(122,140,42,0.3);box-shadow:0 8px 30px rgba(0,0,0,0.15)">
+                <img src="{{ asset('assets/images/' . $aboutImg) }}" alt="Tentang {{ config('app.name', 'BANINA') }}"
+                    style="width:100%;height:420px;object-fit:cover;border-radius:14px;border:1px solid rgba(122,140,42,0.3);box-shadow:0 8px 30px rgba(0,0,0,0.15)">
             @else
                 <div style="background:linear-gradient(135deg,var(--black),var(--black-light));border-radius:14px;height:420px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:5rem;border:1px solid rgba(122,140,42,0.3)">
                     <i class="fas fa-store"></i>
