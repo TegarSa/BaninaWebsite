@@ -4,38 +4,53 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontProductController;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\ProductController as DashProductController;
-use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\BannerController;
 use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\ProductController as DashProductController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [HomeController::class, 'about'])->name('about');
-Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-Route::get('/product/{slug}', [FrontProductController::class, 'show'])->name('product.show');
-Route::get('/catalog/{category?}', [FrontProductController::class, 'index'])->name('catalog');
+Route::name('home')->get('/', [HomeController::class, 'index']);
+Route::name('about')->get('/about', [HomeController::class, 'about']);
+Route::name('contact')->get('/contact', [HomeController::class, 'contact']);
 
-Route::get('/login', [AuthController::class, 'index'])->name('login');
-Route::post('/login', [AuthController::class, 'proses_login'])->name('login.proses');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::controller(FrontProductController::class)->group(function () {
+    Route::name('catalog')->get('/catalog/{category?}', 'index');
+    Route::name('product.show')->get('/product/{slug}', 'show');
+});
+
+Route::controller(AuthController::class)->group(function () {
+    Route::name('login')->get('/login', 'index');
+    Route::name('login.proses')->post('/login', 'proses_login');
+    Route::name('logout')->post('/logout', 'logout');
+});
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::name('dashboard')->get('/dashboard', [DashboardController::class, 'index']);
     
-    Route::post('/products/{id}/toggle-feature', [DashProductController::class, 'toggleFeature'])->name('products.toggle-feature');
-    Route::post('/products/{id}/toggle-active', [DashProductController::class, 'toggleActive'])->name('products.toggle-active');
-    Route::post('/products/{id}/image/{imgId}/set-primary', [DashProductController::class, 'setPrimaryImage'])->name('products.image.set-primary');
-    Route::delete('/products/{id}/image/{imgId}', [DashProductController::class, 'destroyImage'])->name('products.image.destroy');
+    Route::controller(DashProductController::class)->prefix('products')->name('products.')->group(function () {
+        Route::name('toggle-feature')->post('/{id}/toggle-feature', 'toggleFeature');
+        Route::name('toggle-active')->post('/{id}/toggle-active', 'toggleActive');
+        Route::name('image.set-primary')->post('/{id}/image/{imgId}/set-primary', 'setPrimaryImage');
+        Route::name('image.destroy')->delete('/{id}/image/{imgId}', 'destroyImage');
+    });
 
-    Route::post('/categories/{id}/toggle-active', [CategoryController::class, 'toggleActive'])->name('categories.toggle-active');
+    Route::controller(CategoryController::class)->prefix('categories')->name('categories.')->group(function () {
+        Route::name('toggle-active')->post('/{id}/toggle-active', 'toggleActive');
+    });
 
-    Route::post('/banners/{id}/toggle-active', [BannerController::class, 'toggleActive'])->name('banners.toggle-active');
+    Route::controller(BannerController::class)->prefix('banners')->name('banners.')->group(function () {
+        Route::name('toggle-active')->post('/{id}/toggle-active', 'toggleActive');
+    });
 
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
+    Route::controller(SettingController::class)->prefix('settings')->name('settings.')->group(function () {
+        Route::name('index')->get('/', 'index');
+        Route::name('update')->put('/', 'update');
+    });
     
-    Route::resource('banners', BannerController::class);
-    Route::resource('products', DashProductController::class);
-    Route::resource('categories', CategoryController::class);
+    Route::resources([
+        'banners'    => BannerController::class,
+        'products'   => DashProductController::class,
+        'categories' => CategoryController::class,
+    ]);
 });

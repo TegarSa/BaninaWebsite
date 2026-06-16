@@ -5,17 +5,19 @@
 @endphp
 
 <div class="topbar">
-    <div class="container">
-        @if($navbarAddress)
-            <span>
-                <i class="fas fa-map-marker-alt"></i> {{ $navbarAddress }}
+    <div class="container topbar-content">
+        <div class="topbar-left">
+            @if($navbarAddress)
+                <span class="topbar-item">
+                    <i class="fas fa-map-marker-alt"></i> {{ $navbarAddress }}
+                </span>
+            @endif
+        </div>
+        <div class="topbar-right">
+            <span class="topbar-item d-none-mobile">
+                <i class="fas fa-clock"></i> Mon - Sat: 09.00 - 21.00
             </span>
-        @endif
-        @if($navbarWhatsapp)
-            <span>
-                <i class="fab fa-whatsapp"></i> {{ $navbarWhatsapp }}
-            </span>
-        @endif
+        </div>
     </div>
 </div>
 

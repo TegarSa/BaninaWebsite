@@ -45,14 +45,12 @@
             opacity: 0;
         }
 
-        /* Modifikasi: Menambahkan animasi pulseGlow saat tombol muncul */
         .back-to-top-btn.show {
             right: 36px;
             opacity: 1;
             animation: pulseGlow 2s infinite ease-in-out;
         }
 
-        /* Modifikasi: Hover efek shadow-nya disesuaikan agar tetap matching */
         .back-to-top-btn:hover {
             background-color: #141414;
             transform: translateY(-5px);
@@ -113,7 +111,6 @@
         }
 
         .back-to-top-btn.show .shimmer-effect {
-            /* Menambahkan multi-animation agar efek shimmer dan glow bisa jalan bareng */
             animation: simmerSimmer 3.5s infinite ease-in-out;
         }
 
@@ -123,7 +120,6 @@
             100% { left: 150%; }
         }
 
-        /* --- Tambahan Animasi Baru untuk Efek Menyala/Berkedip --- */
         @keyframes pulseGlow {
             0% {
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 0px rgba(154, 173, 58, 0);
