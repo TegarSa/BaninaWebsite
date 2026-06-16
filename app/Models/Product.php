@@ -9,6 +9,8 @@ class Product extends Model
 {
     protected $table = 'products';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'category_id',
         'name',
@@ -19,17 +21,19 @@ class Product extends Model
         'shopee_url',
         'is_featured',
         'is_active',
-        'sort_order'
+        'sort_order',
+        'created_at' 
     ];
 
-    // Boot untuk generate slug otomatis saat simpan produk baru jika dibutuhkan
     protected static function boot()
     {
         parent::boot();
+        
         static::creating(function ($product) {
             if (empty($product->slug)) {
                 $product->slug = Str::slug($product->name);
             }
+            $product->created_at = now(); 
         });
     }
 

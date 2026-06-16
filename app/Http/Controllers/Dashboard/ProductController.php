@@ -27,7 +27,11 @@ class ProductController extends Controller
             $query->where('category_id', $catFilter);
         }
 
-        $products = $query->orderBy('sort_order', 'asc')->orderBy('created_at', 'desc')->get();
+        $products = $query->orderBy('sort_order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
         $allCats = Category::orderBy('sort_order', 'asc')->get();
 
         return view('dashboard.product.index', compact('products', 'allCats', 'search', 'catFilter'));

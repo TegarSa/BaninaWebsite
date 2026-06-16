@@ -21,24 +21,34 @@
     <div class="p-3 bg-light border-bottom border-top">
         <form method="GET" action="{{ route('products.index') }}" class="row g-2 align-items-center">
             <div class="col-12 col-md-4">
-                <input type="text" name="q" value="{{ $search }}" class="form-control form-control-sm" placeholder="Cari nama produk...">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-light border-end-0 text-muted">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" name="q" value="{{ $search }}" class="form-control border-start-0 ps-0" placeholder="Cari nama produk..." style="box-shadow: none;">
+                </div>
             </div>
+
             <div class="col-12 col-md-3">
-                <select name="cat" class="form-select form-select-sm">
+                <select name="cat" class="form-select form-select-sm" style="box-shadow: none;">
                     <option value="">Semua Kategori</option>
                     @foreach ($allCats as $cat)
                         <option value="{{ $cat->id }}" {{ $catFilter == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                     @endforeach
                 </select>
             </div>
+
             <div class="col-12 col-md-auto d-flex gap-2">
-                <button type="submit" class="btn btn-primary btn-sm px-3"><i class="fas fa-search me-1"></i> Filter</button>
-                <a href="{{ route('products.index') }}" class="btn btn-outline-secondary btn-sm px-3">Reset</a>
+                <button type="submit" class="btn btn-sm px-3 text-white fw-medium rounded-2" style="background-color: #1a1e21; border: 1px solid #1a1e21;">
+                    <i class="fas fa-sliders-h me-1"></i> Filter
+                </button>
+                <a href="{{ route('products.index') }}" class="btn btn-outline-secondary btn-sm px-3 rounded-2 fw-medium">
+                    <i class="fas fa-sync-alt me-1" style="font-size: 0.75rem;"></i> Reset
+                </a>
             </div>
         </form>
     </div>
 
-    <!-- Responsive Table -->
     <div class="table-responsive">
         <table class="table align-middle table-hover mb-0">
             <thead class="table-light text-secondary small text-uppercase">
@@ -119,6 +129,38 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+
+    <div class="card-footer bg-white border-top py-3 d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
+        <div class="text-muted small fw-medium">
+            Menampilkan <span class="text-dark fw-bold">{{ $products->firstItem() ?? 0 }}</span> 
+            sampai <span class="text-dark fw-bold">{{ $products->lastItem() ?? 0 }}</span> 
+            dari <span class="text-dark fw-bold">{{ $products->total() }}</span> data
+        </div>
+        
+        <div class="mb-0">
+            @if ($products->total() <= $products->perPage())
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm mb-0 gap-1">
+                        <li class="page-item disabled" aria-disabled="true">
+                            <span class="page-link rounded-2 border-0 bg-light text-muted d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <i class="fas fa-chevron-left" style="font-size: 0.75rem;"></i>
+                            </span>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link rounded-2 border-0 d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px; background-color: #4e5d6c; color: #fff;">1</span>
+                        </li>
+                        <li class="page-item disabled" aria-disabled="true">
+                            <span class="page-link rounded-2 border-0 bg-light text-muted d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </nav>
+            @else
+                {{ $products->links('pagination::bootstrap-5') }}
+            @endif
+        </div>
     </div>
 </div>
 
