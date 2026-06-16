@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
     protected $table = 'products';
-
-    const UPDATED_AT = null;
 
     protected $fillable = [
         'category_id',
@@ -23,6 +22,17 @@ class Product extends Model
         'sort_order'
     ];
 
+    // Boot untuk generate slug otomatis saat simpan produk baru jika dibutuhkan
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($product) {
+            if (empty($product->slug)) {
+                $product->slug = Str::slug($product->name);
+            }
+        });
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -30,12 +40,6 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany(ProductImage::class);
-    }
-
-    public function primaryImage()
-    {
-        return $this->hasOne(ProductImage::class)
-            ->where('is_primary', 1);
+        return $this->hasMany(ProductImage::class)->orderBy('is_primary', 'desc')->orderBy('sort_order', 'asc');
     }
 }
