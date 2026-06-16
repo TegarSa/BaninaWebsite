@@ -94,13 +94,6 @@ php artisan migrate --seed
 
 ```
 
-Hubungkan folder penyimpanan file upload agar bisa diakses secara publik:
-
-```bash
-php artisan storage:link
-
-```
-
 ### 5. Jalankan Server Lokal
 
 ```bash
