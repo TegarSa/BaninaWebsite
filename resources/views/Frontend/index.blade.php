@@ -5,7 +5,6 @@
 @section('content')
 
 @php
-    // Ambil nomor whatsapp langsung agar aman dan konsisten di halaman index
     $indexWhatsapp = \App\Models\Setting::getValue('whatsapp_number');
 @endphp
 
@@ -42,7 +41,6 @@
     transform: scale(1);
 }
 
-/* Multi-layer overlay */
 .hero-overlay-elegant {
     position: absolute;
     inset: 0;
@@ -52,7 +50,6 @@
     z-index: 3;
 }
 
-/* No banner fallback */
 .hero-no-img {
     position: absolute;
     inset: 0;
@@ -66,7 +63,6 @@
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237a8c2a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* Content */
 .hero-content-elegant {
     position: absolute;
     inset: 0;
@@ -173,7 +169,6 @@
     color: var(--gold);
 }
 
-/* Progress bar navigation */
 .hero-nav {
     position: absolute;
     bottom: 3rem;
@@ -199,6 +194,7 @@
 .hero-nav-item:hover { opacity: 0.8; }
 
 .hero-nav-number {
+    font-size: 0.7 stroke;
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.15em;
@@ -228,7 +224,6 @@
     to { transform: scaleX(1); }
 }
 
-/* Slide counter */
 .hero-counter {
     position: absolute;
     bottom: 3rem;
@@ -240,7 +235,6 @@
 }
 .hero-counter span { color: #fff; font-weight: 600; }
 
-/* Scroll indicator */
 .hero-scroll {
     position: absolute;
     bottom: 2rem;
@@ -267,6 +261,100 @@
     50% { transform: translateX(-50%) translateY(6px); }
 }
 
+.custom-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8); 
+    z-index: 999999; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    padding: 20px;
+}
+
+.custom-popup-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.custom-popup-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 450px; 
+    max-height: 80vh; 
+    background: #000;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.custom-popup-overlay.show .custom-popup-wrapper {
+    transform: scale(1);
+}
+
+.popup-img-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 75vh;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.custom-popup-content img {
+    width: 100%;
+    height: auto;
+    max-height: 75vh;
+    display: block;
+    object-fit: cover; 
+    object-position: center;
+}
+
+.custom-popup-close {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 26px; 
+    line-height: 0;
+    cursor: pointer;
+    z-index: 1000005;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.custom-popup-close:hover {
+    background: #ffffff;
+    color: #000000;
+    transform: scale(1.1);
+}
+
+@media (max-width: 576px) {
+    .custom-popup-wrapper {
+        max-width: 90%;
+    }
+
+    .custom-popup-close {
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+}
+
 @media (max-width: 768px) {
     .hero-elegant { height: 85vh; }
     .hero-content-elegant .container { padding: 0 1.5rem; }
@@ -281,8 +369,7 @@
     @if($banners->isNotEmpty())
         @foreach($banners as $i => $banner)
             <div class="hero-slide-elegant {{ $i === 0 ? 'active' : '' }}" data-index="{{ $i }}">
-                {{-- Mengambil gambar banner langsung dari folder public/assets/images/ --}}
-                <img src="{{ asset('assets/images/banners' . $banner->image) }}" alt="{{ $banner->title }}">
+                <img src="{{ asset('assets/images/' . $banner->image) }}" alt="{{ $banner->title }}">
             </div>
         @endforeach
 
@@ -381,8 +468,7 @@
                     <a href="{{ url('/product/' . $product->slug) }}" style="text-decoration:none;color:inherit;display:contents">
                         <div class="product-img-wrap">
                             @if($img)
-                                {{-- Mengambil gambar produk langsung dari folder public/assets/images/ --}}
-                                <img src="{{ asset('assets/images/products.' . $img) }}" alt="{{ $product->name }}" loading="lazy">
+                                <img src="{{ asset('assets/images/' . $img) }}" alt="{{ $product->name }}" loading="lazy">
                             @else
                                 <div class="product-placeholder"><i class="fas fa-tshirt"></i></div>
                             @endif
@@ -451,12 +537,10 @@
                     $icon = $icons[$cat->slug] ?? 'fa-tshirt';
                 @endphp
                 
-                {{-- Tautan diperbarui menggunakan route('catalog', slug) --}}
                 <a href="{{ route('catalog', $cat->slug) }}" class="cat-circle-item">
                     <div class="cat-circle-img">
                         @if($cat->image)
-                            {{-- Pastikan path sudah sesuai dengan lokasi folder images kamu --}}
-                            <img src="{{ asset('assets/images/categories/' . $cat->image) }}" alt="{{ $cat->name }}">
+                            <img src="{{ asset('assets/images/' . $cat->image) }}" alt="{{ $cat->name }}">
                         @else
                             <div class="cat-circle-placeholder">
                                 <i class="fas {{ $icon }}"></i>
@@ -503,7 +587,7 @@
     </div>
 </section>
 
-<section style="background:linear-gradient(135deg,var(--black) 0%,#111800 100%);padding:5rem 0;text-align:center;position:relative;overflow:hidden;border-top:1px solid rgba(122,140,42,0.2)">
+<section class="section" style="background:linear-gradient(135deg,var(--black) 0%,#111800 100%);padding:5rem 0;text-align:center;position:relative;overflow:hidden;border-top:1px solid rgba(122,140,42,0.2)">
     <div style="position:absolute;inset:0;background-image:url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%237a8c2a\' fill-opacity=\'0.06\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"></div>
     <div class="container fade-in" style="position:relative;z-index:1">
         <span class="section-label">Butuh Bantuan?</span>
@@ -519,38 +603,83 @@
     </div>
 </section>
 
+@if($popupBanner)
+    <div id="customPromoModal" class="custom-popup-overlay">
+        <div class="custom-popup-wrapper">
+            {{-- Tombol close dipindah ke dalam wrapper dengan karakter HTML murni agar pasti kelihatan --}}
+            <button type="button" class="custom-popup-close" id="closePromoBtn" aria-label="Close">
+                &times;
+            </button>
+            <div class="custom-popup-content">
+                @if($popupBanner->link)
+                    <a href="{{ $popupBanner->link }}" target="_blank" class="popup-img-link">
+                        <img src="{{ asset('assets/images/' . $popupBanner->image) }}" alt="Promo">
+                    </a>
+                @else
+                    <div class="popup-img-link">
+                        <img src="{{ asset('assets/images/' . $popupBanner->image) }}" alt="Promo">
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+@endif
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const slides = document.querySelectorAll('.hero-slide-elegant');
-    const navItems = document.querySelectorAll('.hero-nav-item');
-    const counter = document.getElementById('currentSlide');
-    if (!slides.length || slides.length < 2) return;
+    document.addEventListener('DOMContentLoaded', function () {
+        // 1. Logic Slider Hero
+        const slides = document.querySelectorAll('.hero-slide-elegant');
+        const navItems = document.querySelectorAll('.hero-nav-item');
+        const counter = document.getElementById('currentSlide');
+        if (slides.length >= 2) {
+            let current = 0;
+            let timer;
 
-    let current = 0;
-    let timer;
+            function goTo(n) {
+                slides[current].classList.remove('active');
+                navItems[current]?.classList.remove('active');
+                current = (n + slides.length) % slides.length;
+                slides[current].classList.add('active');
+                if (navItems[current]) navItems[current].classList.add('active');
+                if (counter) counter.textContent = String(current + 1).padStart(2, '0');
+            }
 
-    function goTo(n) {
-        slides[current].classList.remove('active');
-        navItems[current]?.classList.remove('active');
-        current = (n + slides.length) % slides.length;
-        slides[current].classList.add('active');
-        if (navItems[current]) navItems[current].classList.add('active');
-        if (counter) counter.textContent = String(current + 1).padStart(2, '0');
-    }
+            function next() { goTo(current + 1); }
 
-    function next() { goTo(current + 1); }
+            function startTimer() {
+                clearInterval(timer);
+                timer = setInterval(next, 5000);
+            }
 
-    function startTimer() {
-        clearInterval(timer);
-        timer = setInterval(next, 5000);
-    }
+            navItems.forEach((btn, i) => {
+                btn.addEventListener('click', () => { goTo(i); startTimer(); });
+            });
 
-    navItems.forEach((btn, i) => {
-        btn.addEventListener('click', () => { goTo(i); startTimer(); });
+            startTimer();
+        }
+
+        // 2. Logic Pop-up Promo Murni JavaScript
+        @if($popupBanner)
+            const modalOverlay = document.getElementById('customPromoModal');
+            const closeBtn = document.getElementById('closePromoBtn');
+
+            if (modalOverlay && closeBtn) {
+                setTimeout(() => {
+                    modalOverlay.classList.add('show');
+                }, 1200);
+
+                closeBtn.addEventListener('click', function() {
+                    modalOverlay.classList.remove('show');
+                });
+
+                modalOverlay.addEventListener('click', function(e) {
+                    if (e.target === modalOverlay) {
+                        modalOverlay.classList.remove('show');
+                    }
+                });
+            }
+        @endif
     });
-
-    startTimer();
-});
 </script>
 
 @endsection

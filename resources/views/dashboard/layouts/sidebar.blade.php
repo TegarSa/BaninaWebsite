@@ -35,12 +35,14 @@
         color: #b3b3b3;
         text-decoration: none;
         transition: all 0.2s;
+        border-left: 4px solid transparent;
     }
 
-    #sidebar ul li a:hover, #sidebar ul li.active > a {
-        color: #fff;
-        background: rgba(255, 255, 255, 0.05);
-        border-left: 4px solid var(--admin-gold-light);
+    #sidebar ul li a:hover, 
+    #sidebar ul li.active a {
+        color: #fff !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-left: 4px solid var(--admin-gold-light) !important;
     }
 
     #sidebar ul li a i {
@@ -48,10 +50,17 @@
         text-align: center;
     }
 
+    @media (min-width: 768.01px) {
+        #sidebar.active {
+            margin-left: -260px;
+        }
+    }
+
     @media (max-width: 768px) {
         #sidebar {
             margin-left: -260px;
             position: fixed;
+            height: 100vh;
         }
         #sidebar.active {
             margin-left: 0;
@@ -66,19 +75,19 @@
     </div>
 
     <ul class="list-unstyled components">
-        <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <li class="{{ request()->is('admin') || request()->routeIs('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}"><i class="fas fa-chart-pie"></i> Dashboard</a>
         </li>
-        <li>
+        <li class="{{ request()->is('admin/products*') ? 'active' : '' }}">
             <a href="{{ url('/admin/products') }}"><i class="fas fa-tshirt"></i> Kelola Produk</a>
         </li>
-        <li>
+        <li class="{{ request()->is('admin/categories*') ? 'active' : '' }}">
             <a href="{{ url('/admin/categories') }}"><i class="fas fa-tags"></i> Kelola Kategori</a>
         </li>
-        <li>
+        <li class="{{ request()->is('admin/banners*') ? 'active' : '' }}">
             <a href="{{ url('/admin/banners') }}"><i class="fas fa-images"></i> Kelola Banner</a>
         </li>
-        <li>
+        <li class="{{ request()->is('admin/settings*') ? 'active' : '' }}">
             <a href="{{ url('/admin/settings') }}"><i class="fas fa-sliders"></i> Pengaturan Toko</a>
         </li>
         <li class="mt-4 border-top border-secondary pt-2">

@@ -8,9 +8,8 @@ class Banner extends Model
 {
     protected $table = 'banners';
 
-    const UPDATED_AT = null;
-
     protected $fillable = [
+        'type',
         'title',
         'subtitle',
         'image',

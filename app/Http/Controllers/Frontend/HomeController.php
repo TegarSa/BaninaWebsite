@@ -12,32 +12,38 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $banners = Banner::where('is_active', 1)
-            ->orderBy('sort_order')
-            ->get();
+        $banners = Banner::where('type', 'hero')
+                        ->where('is_active', 1)
+                        ->orderBy('sort_order', 'asc')
+                        ->take(5) 
+                        ->get();
 
-        $categories = Category::withCount(['products as product_count' => function ($q) {
-                $q->where('is_active', 1);
-            }])
-            ->where('is_active', 1)
-            ->orderBy('sort_order')
-            ->get();
+        $popupBanner = Banner::where('type', 'popup')
+                            ->where('is_active', 1)
+                            ->orderBy('sort_order', 'asc')
+                            ->first();
 
-        $featured = Product::with(['category', 'images'])
-            ->where('is_featured', 1)
-            ->where('is_active', 1)
-            ->orderBy('sort_order')
-            ->limit(8)
-            ->get();
+        $featured = Product::with(['images', 'category'])
+                        ->where('is_featured', 1)
+                        ->where('is_active', 1)
+                        ->take(8)
+                        ->get();
 
-        return view('frontend.index', [
-            'banners' => $banners,
-            'categories' => $categories,
-            'featured' => $featured,
-            'whatsapp' => Setting::getValue('whatsapp_number'),
-            'heroTitle' => Setting::getValue('hero_title'),
-            'heroSubtitle' => Setting::getValue('hero_subtitle'),
-        ]);
+        $categories = Category::where('is_active', 1)
+                            ->orderBy('sort_order', 'asc')
+                            ->get();
+
+        $heroTitle = "Koleksi Eksklusif";
+        $heroSubtitle = "Temukan kenyamanan beribadah dan keanggunan berbusana dengan produk premium kami.";
+
+        return view('frontend.index', compact(
+            'banners', 
+            'popupBanner', 
+            'featured', 
+            'categories', 
+            'heroTitle', 
+            'heroSubtitle'
+        ));
     }
 
     public function about()
