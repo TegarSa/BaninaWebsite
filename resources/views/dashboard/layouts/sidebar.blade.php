@@ -5,14 +5,19 @@
         background: var(--admin-black);
         color: #fff;
         transition: all 0.3s;
-        min-height: 100vh;
+        height: 100vh;
+        position: sticky;
+        top: 0;
         z-index: 999;
+        display: flex;
+        flex-direction: column;
     }
 
     #sidebar .sidebar-header {
         padding: 1.5rem;
         background: #000;
         border-bottom: 1px solid rgba(255,255,255,0.05);
+        flex-shrink: 0;
     }
 
     #sidebar .sidebar-header h3 {
@@ -24,6 +29,17 @@
 
     #sidebar ul.components {
         padding: 1rem 0;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    #sidebar ul.components::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    #sidebar ul.components::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
     }
 
     #sidebar ul li a {
@@ -60,7 +76,6 @@
         #sidebar {
             margin-left: -260px;
             position: fixed;
-            height: 100vh;
         }
         #sidebar.active {
             margin-left: 0;
