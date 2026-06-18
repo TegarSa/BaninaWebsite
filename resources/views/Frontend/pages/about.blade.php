@@ -5,58 +5,67 @@
 @section('content')
 
 @php
-    // Mengambil data setting dinamis dari database secara aman
     $aboutWhatsapp = \App\Models\Setting::getValue('whatsapp_number');
-    $aboutText = \App\Models\Setting::getValue('about_text') ?? 'Kami berkomitmen untuk menghadirkan pilihan busana muslim pria berkualitas tinggi yang memadukan keindahan estetika dengan nilai-nilai islami.';
-    $aboutImg = \App\Models\Setting::getValue('about_image');
-    $shopeeRating = trim(\App\Models\Setting::getValue('shopee_rating')) ?: '4.9';
+    $aboutText     = \App\Models\Setting::getValue('about_text') ?? 'Kami berkomitmen untuk menghadirkan pilihan busana muslim pria berkualitas tinggi yang memadukan keindahan estetika dengan nilai-nilai islami.';
+    $aboutImg      = \App\Models\Setting::getValue('about_image');
+    $shopeeRating  = trim(\App\Models\Setting::getValue('shopee_rating')) ?: '4.9';
 @endphp
 
-<div class="page-header">
+{{-- Page header --}}
+<div class="about-header">
     <div class="container">
+        <span class="section-label" style="display:block;margin-bottom:12px">Kisah Kami</span>
         <h1>Tentang {{ config('app.name', 'BANINA') }}</h1>
-        <p>Mengenal kami lebih dekat</p>
+        <p>Mengenal kami lebih dekat — busana muslim pria premium sejak 2019</p>
     </div>
 </div>
 
-<div class="container">
-    <div class="about-grid fade-in">
-        <div class="about-text">
-            <span class="section-label">Kisah Kami</span>
-            <h2>Busana Muslim Pria <em style="font-style:italic;color:var(--gold)">Premium</em> Sejak 2019</h2>
-            
-            <p>{!! nl2br(e($aboutText)) !!}</p>
-            
-            <p>Kami berkomitmen untuk menghadirkan pilihan busana muslim pria berkualitas tinggi yang memadukan keindahan estetika dengan nilai-nilai islami, sehingga setiap pria bisa tampil percaya diri dan elegan.</p>
-            
-            @if($aboutWhatsapp)
-                <a href="https://wa.me/{{ $aboutWhatsapp }}" class="btn-primary" target="_blank" style="display:inline-flex;margin-top:1.5rem">
-                    <i class="fab fa-whatsapp"></i> Hubungi Kami
-                </a>
-            @endif
-        </div>
-        
-       <div class="about-img">
-            @if($aboutImg)
-                <img src="{{ asset('assets/images/' . $aboutImg) }}" alt="Tentang {{ config('app.name', 'BANINA') }}"
-                    style="width:100%;height:420px;object-fit:cover;border-radius:14px;border:1px solid rgba(122,140,42,0.3);box-shadow:0 8px 30px rgba(0,0,0,0.15)">
-            @else
-                <div style="background:linear-gradient(135deg,var(--black),var(--black-light));border-radius:14px;height:420px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:5rem;border:1px solid rgba(122,140,42,0.3)">
-                    <i class="fas fa-store"></i>
-                </div>
-            @endif
+{{-- Main about section --}}
+<section class="section">
+    <div class="container">
+        <div class="about-grid">
+
+            {{-- Image --}}
+            <div class="about-img-wrap fade-in">
+                @if($aboutImg)
+                    <img src="{{ asset('assets/images/' . $aboutImg) }}" alt="Tentang {{ config('app.name', 'BANINA') }}">
+                @else
+                    <div style="width:100%;height:100%;min-height:400px;display:flex;align-items:center;justify-content:center;background:var(--ivory-mid);font-size:5rem;color:var(--outline)">
+                        <i class="fas fa-store"></i>
+                    </div>
+                @endif
+            </div>
+
+            {{-- Text --}}
+            <div class="about-content fade-in">
+                <span class="section-label" style="display:block;margin-bottom:14px">Busana Muslim Pria Premium</span>
+                <h2>Kenyamanan Beribadah, Keanggunan Penampilan</h2>
+
+                <p style="margin-top:20px">{!! nl2br(e($aboutText)) !!}</p>
+
+                <p>Kami berkomitmen untuk menghadirkan pilihan busana muslim pria berkualitas tinggi yang memadukan keindahan estetika dengan nilai-nilai islami, sehingga setiap pria bisa tampil percaya diri dan elegan.</p>
+
+                @if($aboutWhatsapp)
+                    <a href="https://wa.me/{{ $aboutWhatsapp }}" class="btn-primary"
+                       target="_blank" style="display:inline-flex;margin-top:2rem">
+                        <i class="fab fa-whatsapp"></i> Hubungi Kami
+                    </a>
+                @endif
+            </div>
+
         </div>
     </div>
-</div>
+</section>
 
-<!-- Values -->
-<div style="background:var(--cream);padding:5rem 0;border-top:1px solid #e8e0d0;border-bottom:1px solid #e8e0d0">
+{{-- Values --}}
+<section class="section section-bg-dark">
     <div class="container">
         <div class="section-header fade-in">
             <span class="section-label">Nilai Kami</span>
             <h2 class="section-title">Komitmen {{ config('app.name', 'BANINA') }}</h2>
             <div class="divider"><span class="divider-icon">✦</span></div>
         </div>
+
         <div class="values-grid">
             <div class="value-card fade-in">
                 <div class="value-icon"><i class="fas fa-award"></i></div>
@@ -80,30 +89,30 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Stats -->
-<div style="background:var(--black);padding:4rem 0;border-bottom:1px solid rgba(122,140,42,0.2)">
+{{-- Stats --}}
+<section class="section" style="background:var(--onyx);padding:4rem 0">
     <div class="container">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;text-align:center">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;text-align:center">
             <div class="fade-in">
-                <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--gold)">2019</div>
-                <div style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-top:0.4rem;letter-spacing:0.1em;text-transform:uppercase">Berdiri Sejak</div>
+                <div style="font-family:var(--font-serif);font-size:3rem;font-weight:700;color:var(--olive-light)">2019</div>
+                <div style="color:rgba(255,255,255,0.5);font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-top:6px">Berdiri Sejak</div>
             </div>
             <div class="fade-in">
-                <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--gold)">5+</div>
-                <div style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-top:0.4rem;letter-spacing:0.1em;text-transform:uppercase">Kategori Produk</div>
+                <div style="font-family:var(--font-serif);font-size:3rem;font-weight:700;color:var(--olive-light)">5+</div>
+                <div style="color:rgba(255,255,255,0.5);font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-top:6px">Kategori Produk</div>
             </div>
             <div class="fade-in">
-                <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--gold)">1000+</div>
-                <div style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-top:0.4rem;letter-spacing:0.1em;text-transform:uppercase">Pelanggan Puas</div>
+                <div style="font-family:var(--font-serif);font-size:3rem;font-weight:700;color:var(--olive-light)">1000+</div>
+                <div style="color:rgba(255,255,255,0.5);font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-top:6px">Pelanggan Puas</div>
             </div>
             <div class="fade-in">
-                <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--gold)">⭐ {{ $shopeeRating }}</div>
-                <div style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-top:0.4rem;letter-spacing:0.1em;text-transform:uppercase">Rating Toko</div>
+                <div style="font-family:var(--font-serif);font-size:3rem;font-weight:700;color:var(--olive-light)">⭐ {{ $shopeeRating }}</div>
+                <div style="color:rgba(255,255,255,0.5);font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-top:6px">Rating Toko</div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 @endsection
