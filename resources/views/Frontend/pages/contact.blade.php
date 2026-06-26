@@ -4,84 +4,83 @@
 
 @section('content')
 
-{{-- Page header --}}
-<div class="contact-header">
-    <div class="container">
-        <h1>Kontak Kami</h1>
-        <p>Tim {{ config('app.name', 'BANINA') }} siap membantu Anda</p>
+<div class="bg-surface-container py-14 text-center">
+    <div class="container mx-auto px-4 md:px-8">
+        <h1 class="font-display text-3xl md:text-4xl text-primary mb-3">Kontak Kami</h1>
+        <p class="font-body text-sm text-on-surface-variant max-w-xl mx-auto">Kami hadir untuk memastikan setiap kebutuhan busana Anda terpenuhi. Silakan hubungi tim kami untuk konsultasi atau bantuan lebih lanjut.</p>
     </div>
 </div>
 
-{{-- Contact grid --}}
-<div class="container">
-    <div class="contact-grid">
+<div class="container mx-auto px-4 md:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
-        {{-- Info column --}}
-        <div class="contact-info fade-in">
-            <span class="section-label" style="display:block;margin-bottom:14px">Hubungi Kami</span>
-            <h2>Ada yang bisa kami bantu?</h2>
-            <p style="margin:14px 0 28px;color:var(--onyx-muted);font-size:15px;line-height:1.7">
-                Jangan ragu untuk menghubungi kami. Tim BANINA siap melayani pertanyaan dan pesanan Anda.
-            </p>
+        {{-- ============ INFO KONTAK ============ --}}
+        <div>
+            <span class="font-body text-xs uppercase tracking-[0.2em] text-secondary mb-3 block">Hubungi Kami</span>
+            <h2 class="font-display text-2xl text-primary mb-3">Ada yang bisa kami bantu?</h2>
+            <p class="font-body text-sm text-on-surface-variant mb-8">Jangan ragu untuk menghubungi kami. Tim {{ config('app.name', 'BANINA') }} siap melayani pertanyaan dan pesanan Anda.</p>
+
+            <div class="flex flex-col gap-4 mb-8">
+                @if($whatsapp)
+                    <div class="flex items-center gap-4 bg-surface-container-low rounded-lg p-4">
+                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+                            <i class="fab fa-whatsapp text-secondary"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-body text-xs uppercase tracking-wider text-secondary mb-0.5">WhatsApp</h4>
+                            <p class="font-body text-sm text-primary font-medium">{{ $whatsapp }}</p>
+                        </div>
+                    </div>
+                @endif
+
+                @if($address)
+                    <div class="flex items-center gap-4 bg-surface-container-low rounded-lg p-4">
+                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-secondary"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-body text-xs uppercase tracking-wider text-secondary mb-0.5">Alamat</h4>
+                            <p class="font-body text-sm text-primary font-medium">{{ $address }}</p>
+                        </div>
+                    </div>
+                @endif
+
+                @if($email)
+                    <div class="flex items-center gap-4 bg-surface-container-low rounded-lg p-4">
+                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-secondary"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-body text-xs uppercase tracking-wider text-secondary mb-0.5">Email</h4>
+                            <p class="font-body text-sm text-primary font-medium">{{ $email }}</p>
+                        </div>
+                    </div>
+                @endif
+
+                @if($instagram)
+                    <div class="flex items-center gap-4 bg-surface-container-low rounded-lg p-4">
+                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+                            <i class="fab fa-instagram text-secondary"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-body text-xs uppercase tracking-wider text-secondary mb-0.5">Instagram</h4>
+                            <p class="font-body text-sm text-primary font-medium">{{ $instagram }}</p>
+                        </div>
+                    </div>
+                @endif
+            </div>
 
             @if($whatsapp)
-                <div class="contact-item">
-                    <div class="contact-item-icon"><i class="fab fa-whatsapp"></i></div>
-                    <div class="contact-item-text">
-                        <strong>WhatsApp</strong>
-                        <span>{{ $whatsapp }}</span>
-                    </div>
-                </div>
-            @endif
-
-            @if($address)
-                <div class="contact-item">
-                    <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="contact-item-text">
-                        <strong>Alamat</strong>
-                        <span>{{ $address }}</span>
-                    </div>
-                </div>
-            @endif
-
-            @if($email)
-                <div class="contact-item">
-                    <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
-                    <div class="contact-item-text">
-                        <strong>Email</strong>
-                        <span>{{ $email }}</span>
-                    </div>
-                </div>
-            @endif
-
-            @if($instagram)
-                <div class="contact-item">
-                    <div class="contact-item-icon"><i class="fab fa-instagram"></i></div>
-                    <div class="contact-item-text">
-                        <strong>Instagram</strong>
-                        <span>{{ $instagram }}</span>
-                    </div>
-                </div>
-            @endif
-
-            {{-- WA CTA block --}}
-            @if($whatsapp)
-                <div class="contact-wa-block">
-                    <h3>Chat Langsung via WhatsApp</h3>
-                    <p>Respons cepat, ramah, dan siap membantu Anda menemukan produk yang tepat.</p>
-                    <a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode($waGreeting ?? '') }}"
-                       class="contact-wa-btn" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Mulai Chat
-                    </a>
-                </div>
+                <a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode($waGreeting) }}" target="_blank"
+                   class="inline-flex items-center gap-2 bg-primary-container text-white px-7 py-3 rounded font-body text-sm font-medium hover:bg-primary transition-colors">
+                    <i class="fab fa-whatsapp"></i> Chat via WhatsApp
+                </a>
             @endif
         </div>
 
-        {{-- Map + hours column --}}
-        <div class="fade-in">
-
-            {{-- Google Maps embed --}}
-            <div style="border:1px solid var(--outline);overflow:hidden;line-height:0">
+        {{-- ============ MAP + JAM OPERASIONAL (data asli, tidak diubah) ============ --}}
+        <div>
+            <div class="rounded-lg overflow-hidden editorial-shadow border border-outline-variant">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.8868329685765!2d109.99815120000001!3d-7.695292600000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7aebeb6e5742c3%3A0xb31736b1a63696b9!2sOutlet%20Banina!5e0!3m2!1sid!2sid!4v1778668956874!5m2!1sid!2sid"
                     width="100%" height="360" style="border:0;display:block;"
@@ -90,27 +89,25 @@
                 </iframe>
             </div>
 
-            {{-- Operating hours --}}
-            <div style="margin-top:1.5rem;background:var(--ivory-mid);border:1px solid var(--outline);padding:2rem">
-                <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:400;color:var(--onyx);margin-bottom:1.25rem">
-                    Jam Operasional
+            <div class="mt-6 bg-surface-container rounded-lg p-7">
+                <h3 class="font-display text-lg text-primary mb-4 flex items-center gap-2">
+                    <i class="fas fa-clock text-secondary text-sm"></i> Jam Operasional
                 </h3>
-                <table style="width:100%;font-family:var(--font-sans);font-size:14px;border-collapse:collapse">
-                    <tr style="border-bottom:1px solid var(--outline)">
-                        <td style="padding:10px 0;color:var(--onyx-muted)">Senin – Sabtu</td>
-                        <td style="text-align:right;font-weight:600;color:var(--onyx)">08.00 – 21.00 WIB</td>
+                <table class="w-full font-body text-sm">
+                    <tr class="border-b border-outline-variant/50">
+                        <td class="py-2.5 text-on-surface-variant">Senin – Sabtu</td>
+                        <td class="py-2.5 text-right font-semibold text-primary">08.00 – 21.00 WIB</td>
                     </tr>
-                    <tr style="border-bottom:1px solid var(--outline)">
-                        <td style="padding:10px 0;color:var(--onyx-muted)">Minggu</td>
-                        <td style="text-align:right;font-weight:600;color:var(--onyx)">09.00 – 18.00 WIB</td>
+                    <tr class="border-b border-outline-variant/50">
+                        <td class="py-2.5 text-on-surface-variant">Minggu</td>
+                        <td class="py-2.5 text-right font-semibold text-primary">09.00 – 18.00 WIB</td>
                     </tr>
                     <tr>
-                        <td style="padding:10px 0;color:var(--olive-mid);font-weight:600">WhatsApp</td>
-                        <td style="text-align:right;font-weight:700;color:var(--olive-mid)">24 Jam Aktif</td>
+                        <td class="py-2.5 text-secondary font-medium">WhatsApp 24 Jam</td>
+                        <td class="py-2.5 text-right font-semibold text-secondary">Selalu aktif</td>
                     </tr>
                 </table>
             </div>
-
         </div>
     </div>
 </div>

@@ -104,7 +104,7 @@
                                 
                                 <form action="{{ route('products.toggle-feature', $p->id) }}" method="POST" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary" title="Unggulan"><i class="fas fa-star" style="color: {{ $p->is_featured ? '#7a8c2a' : 'inherit' }}"></i></button>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary" title="Unggulan"><i class="fas fa-star" style="color: {{ $p->is_featured ? '#775a19' : 'inherit' }}"></i></button>
                                 </form>
 
                                 <form action="{{ route('products.toggle-active', $p->id) }}" method="POST" class="d-inline">

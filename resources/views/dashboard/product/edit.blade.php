@@ -79,7 +79,7 @@
                         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-2 mb-4">
                             @foreach ($product->images as $img)
                                 <div class="col position-relative border p-1 rounded bg-white text-center shadow-sm">
-                                    <img src="{{ asset('assets/images/' . $img->image) }}" class="img-fluid rounded mb-1" style="height: 120px; object-fit: cover; border: 2px solid {{ $img->is_primary ? '#7a8c2a' : 'transparent' }};">
+                                    <img src="{{ asset('assets/images/' . $img->image) }}" class="img-fluid rounded mb-1" style="height: 120px; object-fit: cover; border: 2px solid {{ $img->is_primary ? '#775a19' : 'transparent' }};">
                                     
                                     <div class="d-flex justify-content-between p-1">
                                         @if (!$img->is_primary)

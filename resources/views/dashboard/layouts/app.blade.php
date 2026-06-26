@@ -14,10 +14,10 @@
 
     <style>
         :root {
-            --admin-black: #0a0a0a;
-            --admin-black-light: #1e1e1e;
-            --admin-gold: #7a8c2a;
-            --admin-gold-light: #9aad3a;
+            --admin-black: #002819;
+            --admin-black-light: #06402b;
+            --admin-gold: #775a19;
+            --admin-gold-light: #e9c176;
             --bg-light: #f8f9fa;
         }
 
@@ -51,7 +51,7 @@
         .btn-gold {
             background: linear-gradient(135deg, var(--admin-black), var(--admin-black-light));
             color: var(--admin-gold-light);
-            border: 1px solid rgba(122, 140, 42, 0.3);
+            border: 1px solid rgba(233, 193, 118, 0.3);
             font-weight: 500;
         }
         .btn-gold:hover {
