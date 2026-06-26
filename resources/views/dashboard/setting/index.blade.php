@@ -49,14 +49,18 @@
                         <div class="form-text text-muted">Gambar yang ditampilkan di halaman Tentang Kami.</div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary small">Logo (Opsional)</label>
-                        @if(!empty($settings['logo']))
-                            <div class="mb-2 bg-light p-2 rounded border text-center">
-                                <img src="{{ asset('assets/images/' . $settings['logo']) }}" style="max-height: 50px; object-fit: contain;">
+                        <label class="form-label fw-semibold text-secondary small">Foto CTA WhatsApp <span class="badge bg-success ms-1" style="font-size:10px;">Baru</span></label>
+                        @if(!empty($settings['cta_image']))
+                            <div class="mb-2">
+                                <img src="{{ asset('assets/images/' . $settings['cta_image']) }}" class="img-fluid rounded border shadow-sm" style="max-height: 140px; width:100%; object-fit: cover;">
+                            </div>
+                        @else
+                            <div class="mb-2 p-3 bg-light rounded border text-center text-muted small">
+                                <i class="fas fa-image me-1"></i> Belum ada foto, sisi kanan CTA akan tampil kosong.
                             </div>
                         @endif
-                        <input type="file" name="logo" accept="image/*" class="form-control">
-                        <div class="form-text text-muted">PNG transparan direkomendasikan. Kosongkan untuk menampilkan teks nama toko.</div>
+                        <input type="file" name="cta_image" accept="image/*" class="form-control">
+                        <div class="form-text text-muted">Foto yang tampil di sisi kanan kotak "Konsultasikan Gaya Modest Anda" di halaman beranda. Rekomendasi: foto portrait/square, min. 600×600px.</div>
                     </div>
                 </div>
             </div>

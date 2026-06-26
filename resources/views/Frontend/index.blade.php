@@ -17,7 +17,7 @@
 @endphp
 
 {{-- ============ HERO ============ --}}
-<section class="relative h-[520px] md:h-[600px] flex items-center overflow-hidden bg-primary">
+<section class="relative h-[480px] sm:h-[560px] md:h-[640px] lg:h-[760px] xl:h-[860px] flex items-center overflow-hidden bg-primary">
     @if($banners->isNotEmpty())
         <div class="absolute inset-0 z-0">
             @foreach($banners as $i => $banner)
@@ -71,8 +71,12 @@
             @foreach($categories as $cat)
                 @php $icon = $catIcons[$cat->slug] ?? 'fa-tshirt'; @endphp
                 <a href="{{ route('catalog', $cat->slug) }}" class="flex flex-col items-center gap-2 group">
-                    <div class="w-16 h-16 rounded-full bg-white border border-outline-variant flex items-center justify-center group-hover:border-secondary transition-colors">
-                        <i class="fas {{ $icon }} text-lg text-secondary"></i>
+                    <div class="w-16 h-16 rounded-full bg-white border border-outline-variant group-hover:border-secondary transition-colors overflow-hidden flex items-center justify-center">
+                        @if($cat->image)
+                            <img src="{{ asset('assets/images/' . $cat->image) }}" alt="{{ $cat->name }}" class="w-full h-full object-cover object-top">
+                        @else
+                            <i class="fas {{ $icon }} text-lg text-secondary"></i>
+                        @endif
                     </div>
                     <span class="font-body text-xs text-on-surface-variant group-hover:text-secondary transition-colors">{{ $cat->name }}</span>
                 </a>
@@ -98,7 +102,6 @@
             @php
                 $img = optional($product->images->where('is_primary', 1)->first())->image
                     ?? optional($product->images->first())->image;
-                $isNew = $product->created_at && \Carbon\Carbon::parse($product->created_at)->gt(now()->subDays(30));
             @endphp
             <div>
                 <a href="{{ url('/product/' . $product->slug) }}" class="block">
@@ -111,7 +114,7 @@
                             </div>
                         @endif
                         <span class="absolute top-2 left-2 bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded">
-                            {{ $isNew ? 'Baru' : 'Unggulan' }}
+                            Unggulan
                         </span>
                     </div>
                     <p class="font-body text-[11px] uppercase tracking-wider text-on-surface-variant mb-1">{{ $product->category->name ?? '' }}</p>
@@ -177,7 +180,7 @@
 {{-- ============ CTA WHATSAPP ============ --}}
 @if($indexWhatsapp)
 <section class="py-16 container mx-auto px-4 md:px-8">
-    <div class="bg-secondary-container rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    <div class="bg-secondary-container rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 md:min-h-[480px]">
         <div class="p-10 md:p-14 flex flex-col justify-center">
             <h2 class="font-display text-2xl md:text-3xl text-primary mb-4 leading-tight">Konsultasikan Gaya<br>Modest Anda</h2>
             <p class="font-body text-sm text-on-secondary-container/80 mb-8">Bingung memilih ukuran atau model yang tepat? Tim {{ config('app.name', 'BANINA') }} siap membantu Anda memilih koleksi yang paling sesuai dengan karakter Anda.</p>
@@ -186,7 +189,15 @@
                 <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
             </a>
         </div>
-        <div class="hidden md:block bg-primary/10 min-h-[260px]"></div>
+        <div class="block relative overflow-hidden min-h-[280px] md:min-h-[480px]">
+            @if(!empty($ctaImage))
+                <img src="{{ asset('assets/images/' . $ctaImage) }}"
+                     alt="Konsultasi BANINA"
+                     class="absolute inset-0 w-full h-full object-cover object-top">
+            @else
+                <div class="absolute inset-0 bg-primary/10"></div>
+            @endif
+        </div>
     </div>
 </section>
 @endif

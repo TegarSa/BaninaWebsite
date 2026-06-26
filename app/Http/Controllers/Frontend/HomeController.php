@@ -36,13 +36,16 @@ class HomeController extends Controller
         $heroTitle = "Koleksi Eksklusif";
         $heroSubtitle = "Temukan kenyamanan beribadah dan keanggunan berbusana dengan produk premium kami.";
 
+        $ctaImage = Setting::getValue('cta_image');
+
         return view('frontend.index', compact(
             'banners', 
             'popupBanner', 
             'featured', 
             'categories', 
             'heroTitle', 
-            'heroSubtitle'
+            'heroSubtitle',
+            'ctaImage'
         ));
     }
 

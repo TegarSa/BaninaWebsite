@@ -29,18 +29,6 @@ class SettingController extends Controller
             );
         }
 
-        if ($request->hasFile('logo')) {
-            $request->validate(['logo' => 'image|mimes:jpeg,png,jpg,webp|max:2048']);
-            $oldLogo = Setting::where('key', 'logo')->first();
-            if ($oldLogo && $oldLogo->value && file_exists(public_path('assets/images/' . $oldLogo->value))) {
-                @unlink(public_path('assets/images/' . $oldLogo->value));
-            }
-            $file = $request->file('logo');
-            $filename = 'logo_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/logo'), $filename);
-            Setting::updateOrCreate(['key' => 'logo'], ['value' => 'logo/' . $filename]);
-        }
-
         if ($request->hasFile('about_image')) {
             $request->validate(['about_image' => 'image|mimes:jpeg,png,jpg,webp|max:2048']);
             $oldAbout = Setting::where('key', 'about_image')->first();
@@ -51,6 +39,18 @@ class SettingController extends Controller
             $filename = 'about_' . time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('assets/images/about'), $filename);
             Setting::updateOrCreate(['key' => 'about_image'], ['value' => 'about/' . $filename]);
+        }
+
+        if ($request->hasFile('cta_image')) {
+            $request->validate(['cta_image' => 'image|mimes:jpeg,png,jpg,webp|max:3072']);
+            $oldCta = Setting::where('key', 'cta_image')->first();
+            if ($oldCta && $oldCta->value && file_exists(public_path('assets/images/' . $oldCta->value))) {
+                @unlink(public_path('assets/images/' . $oldCta->value));
+            }
+            $file = $request->file('cta_image');
+            $filename = 'cta_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/images/cta'), $filename);
+            Setting::updateOrCreate(['key' => 'cta_image'], ['value' => 'cta/' . $filename]);
         }
 
         return redirect()->route('settings.index')->with('success', 'Pengaturan toko berhasil diperbarui.');
