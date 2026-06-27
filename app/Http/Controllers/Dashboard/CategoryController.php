@@ -23,11 +23,14 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'sort_order' => 'nullable|integer'
+            'name'       => 'required|max:255|unique:categories,name',
+            'image'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'sort_order' => 'nullable|integer|min:0',
         ], [
             'name.required' => 'Nama kategori wajib diisi.',
+            'name.unique'   => 'Nama kategori sudah ada, gunakan nama lain.',
+            'image.image'   => 'File harus berupa gambar.',
+            'image.max'     => 'Ukuran foto maksimal 2MB.',
         ]);
 
         $slug = Str::slug($request->name);
@@ -37,6 +40,7 @@ class CategoryController extends Controller
 
         $imgPath = null;
         if ($request->hasFile('image')) {
+            \Illuminate\Support\Facades\File::ensureDirectoryExists(public_path('assets/images/categories'));
             $file = $request->file('image');
             $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('assets/images/categories'), $filename);
@@ -66,9 +70,14 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'sort_order' => 'nullable|integer'
+            'name'       => 'required|max:255|unique:categories,name,' . $id,
+            'image'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'sort_order' => 'nullable|integer|min:0',
+        ], [
+            'name.required' => 'Nama kategori wajib diisi.',
+            'name.unique'   => 'Nama kategori sudah ada, gunakan nama lain.',
+            'image.image'   => 'File harus berupa gambar.',
+            'image.max'     => 'Ukuran foto maksimal 2MB.',
         ]);
 
         $slug = Str::slug($request->name);

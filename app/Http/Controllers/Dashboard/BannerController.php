@@ -27,10 +27,15 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type' => 'required|in:hero,popup',
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'sort_order' => 'nullable|integer',
-            'link' => 'nullable|url'
+            'type'       => 'required|in:hero,popup',
+            'image'      => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'sort_order' => 'nullable|integer|min:0',
+            'link'       => 'nullable|url',
+        ], [
+            'image.required' => 'Foto banner wajib diupload.',
+            'image.image'    => 'File harus berupa gambar.',
+            'image.max'      => 'Ukuran foto maksimal 2MB.',
+            'link.url'       => 'Format URL tidak valid, harus diawali https://',
         ]);
 
         if ($request->type === 'hero') {
@@ -47,9 +52,8 @@ class BannerController extends Controller
 
         $imgPath = null;
         if ($request->hasFile('image')) {
+            \Illuminate\Support\Facades\File::ensureDirectoryExists(public_path('assets/images/banners'));
             $file = $request->file('image');
-            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/banners'), $filename);
             $imgPath = 'banners/' . $filename;
         }
 
@@ -77,10 +81,14 @@ class BannerController extends Controller
         $banner = Banner::findOrFail($id);
 
         $request->validate([
-            'type' => 'required|in:hero,popup',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'sort_order' => 'nullable|integer',
-            'link' => 'nullable|url'
+            'type'       => 'required|in:hero,popup',
+            'image'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'sort_order' => 'nullable|integer|min:0',
+            'link'       => 'nullable|url',
+        ], [
+            'image.image' => 'File harus berupa gambar.',
+            'image.max'   => 'Ukuran foto maksimal 2MB.',
+            'link.url'    => 'Format URL tidak valid, harus diawali https://',
         ]);
 
         if ($banner->type !== $request->type && $banner->is_active == 1) {

@@ -33,8 +33,8 @@ class HomeController extends Controller
                             ->orderBy('sort_order', 'asc')
                             ->get();
 
-        $heroTitle = "Koleksi Eksklusif";
-        $heroSubtitle = "Temukan kenyamanan beribadah dan keanggunan berbusana dengan produk premium kami.";
+        $heroTitle    = Setting::getValue('hero_title') ?: 'Koleksi Eksklusif';
+        $heroSubtitle = Setting::getValue('hero_subtitle') ?: 'Temukan kenyamanan beribadah dan keanggunan berbusana dengan produk premium kami.';
 
         $ctaImage = Setting::getValue('cta_image');
 

@@ -71,7 +71,7 @@
             </div>
 
             @if($whatsapp)
-                <a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode($waGreeting) }}" target="_blank"
+                <a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode($waGreeting ?? '') }}" target="_blank"
                    class="inline-flex items-center gap-2 bg-primary-container text-white px-7 py-3 rounded font-body text-sm font-medium hover:bg-primary transition-colors">
                     <i class="fab fa-whatsapp"></i> Chat via WhatsApp
                 </a>

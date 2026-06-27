@@ -46,17 +46,25 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:255',
-            'category_id' => 'required',
-            'price_min' => 'required|numeric|min:1',
-            'price_max' => 'nullable|numeric|gte:price_min',
-            'shopee_url' => 'nullable|url',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120'
+            'name'        => 'required|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|max:5000',
+            'price_min'   => 'required|numeric|min:1',
+            'price_max'   => 'nullable|numeric|gte:price_min',
+            'shopee_url'  => 'nullable|url|max:500',
+            'images'      => 'nullable|array|max:10',
+            'images.*'    => 'image|mimes:jpeg,png,jpg,webp|max:5120',
         ], [
-            'name.required' => 'Nama produk wajib diisi.',
-            'category_id.required' => 'Kategori wajib dipilih.',
-            'price_min.required' => 'Harga minimal wajib diisi.',
-            'price_max.gte' => 'Harga maksimal tidak boleh lebih kecil dari harga minimal.',
+            'name.required'       => 'Nama produk wajib diisi.',
+            'category_id.required'=> 'Kategori wajib dipilih.',
+            'category_id.exists'  => 'Kategori tidak valid.',
+            'description.max'     => 'Deskripsi maksimal 5000 karakter.',
+            'price_min.required'  => 'Harga minimal wajib diisi.',
+            'price_max.gte'       => 'Harga maksimal tidak boleh lebih kecil dari harga minimal.',
+            'shopee_url.url'      => 'URL Shopee harus diawali https://',
+            'images.max'          => 'Maksimal 10 foto per produk.',
+            'images.*.image'      => 'File harus berupa gambar.',
+            'images.*.max'        => 'Ukuran tiap foto maksimal 5MB.',
         ]);
 
         $slug = Str::slug($request->name);
@@ -79,8 +87,8 @@ class ProductController extends Controller
 
         // Proses Multi Upload Gambar
         if ($request->hasFile('images')) {
+            \Illuminate\Support\Facades\File::ensureDirectoryExists(public_path('assets/images/products'));
             foreach ($request->file('images') as $key => $file) {
-                // Simpan ke folder public/assets/images/products
                 $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('assets/images/products'), $filename);
 
@@ -108,12 +116,25 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|max:255',
-            'category_id' => 'required',
-            'price_min' => 'required|numeric|min:1',
-            'price_max' => 'nullable|numeric|gte:price_min',
-            'shopee_url' => 'nullable|url',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120'
+            'name'        => 'required|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|max:5000',
+            'price_min'   => 'required|numeric|min:1',
+            'price_max'   => 'nullable|numeric|gte:price_min',
+            'shopee_url'  => 'nullable|url|max:500',
+            'images'      => 'nullable|array|max:10',
+            'images.*'    => 'image|mimes:jpeg,png,jpg,webp|max:5120',
+        ], [
+            'name.required'        => 'Nama produk wajib diisi.',
+            'category_id.required' => 'Kategori wajib dipilih.',
+            'category_id.exists'   => 'Kategori tidak valid.',
+            'description.max'      => 'Deskripsi maksimal 5000 karakter.',
+            'price_min.required'   => 'Harga minimal wajib diisi.',
+            'price_max.gte'        => 'Harga maksimal tidak boleh lebih kecil dari harga minimal.',
+            'shopee_url.url'       => 'URL Shopee harus diawali https://',
+            'images.max'           => 'Maksimal 10 foto per produk.',
+            'images.*.image'       => 'File harus berupa gambar.',
+            'images.*.max'         => 'Ukuran tiap foto maksimal 5MB.',
         ]);
 
         $slug = Str::slug($request->name);
