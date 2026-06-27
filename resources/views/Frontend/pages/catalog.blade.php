@@ -84,12 +84,6 @@
                             @endif
                         </p>
                     </a>
-                    @if($prod->shopee_url)
-                        <a href="{{ $prod->shopee_url }}" target="_blank" rel="noopener"
-                           class="inline-flex items-center gap-2 border border-outline-variant rounded px-3 py-2 font-body text-xs text-on-surface-variant hover:border-secondary hover:text-secondary transition-colors w-full justify-center">
-                            <i class="fas fa-shopping-bag"></i> Beli di Shopee
-                        </a>
-                    @endif
                 </div>
             @endforeach
         </div>
