@@ -162,10 +162,10 @@
             </div>
             <div>
                 <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-bolt text-secondary-container"></i>
+                    <i class="fas fa-store text-secondary-container"></i>
                 </div>
-                <h3 class="font-body text-white font-semibold mb-2">Pelayanan Cepat</h3>
-                <p class="font-body text-sm text-white/60">Proses pemesanan dan pengiriman yang responsif untuk kepuasan pengalaman Anda</p>
+                <h3 class="font-body text-white font-semibold mb-2">Toko Resmi Shopee</h3>
+                <p class="font-body text-sm text-white/60">Belanja langsung di toko resmi kami di Shopee untuk kemudahan dan keamanan transaksi Anda</p>
             </div>
         </div>
     </div>

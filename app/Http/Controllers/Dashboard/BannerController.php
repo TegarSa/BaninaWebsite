@@ -54,6 +54,8 @@ class BannerController extends Controller
         if ($request->hasFile('image')) {
             \Illuminate\Support\Facades\File::ensureDirectoryExists(public_path('assets/images/banners'));
             $file = $request->file('image');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/images/banners'), $filename);
             $imgPath = 'banners/' . $filename;
         }
 
