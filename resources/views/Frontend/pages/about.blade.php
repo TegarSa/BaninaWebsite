@@ -34,9 +34,9 @@
         </div>
 
         <div>
-            <span class="font-body text-xs uppercase tracking-[0.2em] text-secondary mb-3 block">Kisah Kami</span>
+            <span class="font-body text-xs uppercase tracking-[0.2em] text-secondary mb-3 block">Tentang Kami</span>
             <h2 class="font-display text-2xl md:text-3xl text-primary mb-5 leading-tight">
-                Busana Muslim Pria <em class="text-secondary">Premium</em> Sejak 2019
+                BANINA Dominate Your Destiny
             </h2>
             <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-4 whitespace-pre-line">{{ $aboutText }}</p>
             <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
