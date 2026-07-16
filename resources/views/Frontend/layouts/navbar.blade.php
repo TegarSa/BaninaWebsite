@@ -11,7 +11,7 @@
             @endif
         </div>
         <div class="hidden md:flex items-center gap-1.5">
-            <i class="fas fa-clock text-secondary-container"></i> Jam Operasional: 09:00 - 21:00
+            <i class="fas fa-clock text-secondary-container"></i> Jam Operasional: 08:00 - 21:00
         </div>
     </div>
 </div>

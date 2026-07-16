@@ -23,7 +23,7 @@
             <div class="flex flex-col gap-4 mb-8">
                 @if($whatsapp)
                     <div class="flex items-center gap-4 bg-surface-container-low rounded-lg p-4">
-                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center shrink-0">
                             <i class="fab fa-whatsapp text-secondary"></i>
                         </div>
                         <div>
@@ -35,7 +35,7 @@
 
                 @if($address)
                     <div class="flex items-center gap-4 bg-surface-container-low rounded-lg p-4">
-                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center shrink-0">
                             <i class="fas fa-map-marker-alt text-secondary"></i>
                         </div>
                         <div>
@@ -47,7 +47,7 @@
 
                 @if($email)
                     <div class="flex items-center gap-4 bg-surface-container-low rounded-lg p-4">
-                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center shrink-0">
                             <i class="fas fa-envelope text-secondary"></i>
                         </div>
                         <div>
@@ -59,7 +59,7 @@
 
                 @if($instagram)
                     <div class="flex items-center gap-4 bg-surface-container-low rounded-lg p-4">
-                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center flex-shrink-0">
+                        <div class="w-11 h-11 rounded-full bg-secondary-container/30 flex items-center justify-center shrink-0">
                             <i class="fab fa-instagram text-secondary"></i>
                         </div>
                         <div>
@@ -95,16 +95,12 @@
                 </h3>
                 <table class="w-full font-body text-sm">
                     <tr class="border-b border-outline-variant/50">
-                        <td class="py-2.5 text-on-surface-variant">Senin – Sabtu</td>
+                        <td class="py-2.5 text-on-surface-variant">Setiap Hari</td>
                         <td class="py-2.5 text-right font-semibold text-primary">08.00 – 21.00 WIB</td>
                     </tr>
-                    <tr class="border-b border-outline-variant/50">
-                        <td class="py-2.5 text-on-surface-variant">Minggu</td>
-                        <td class="py-2.5 text-right font-semibold text-primary">09.00 – 18.00 WIB</td>
-                    </tr>
                     <tr>
-                        <td class="py-2.5 text-secondary font-medium">WhatsApp 24 Jam</td>
-                        <td class="py-2.5 text-right font-semibold text-secondary">Selalu aktif</td>
+                        <td class="py-2.5 text-secondary font-medium">WhatsApp</td>
+                        <td class="py-2.5 text-right font-semibold text-secondary">08.00 – 21.00 WIB</td>
                     </tr>
                 </table>
             </div>
