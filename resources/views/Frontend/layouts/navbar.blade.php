@@ -4,13 +4,13 @@
 @endphp
 
 <div class="bg-primary text-white text-xs">
-    <div class="container mx-auto px-4 md:px-8 flex justify-between items-center py-2">
+    <div class="container mx-auto px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center gap-1.5 sm:gap-0 py-2 text-center sm:text-left">
         <div class="flex items-center gap-2">
             @if($navbarAddress)
                 <span class="flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-secondary-container"></i> {{ $navbarAddress }}</span>
             @endif
         </div>
-        <div class="hidden md:flex items-center gap-1.5">
+        <div class="flex items-center gap-1.5">
             <i class="fas fa-clock text-secondary-container"></i> Jam Operasional: 08:00 - 21:00
         </div>
     </div>
