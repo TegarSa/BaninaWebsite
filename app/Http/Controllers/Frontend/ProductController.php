@@ -34,24 +34,18 @@ class ProductController extends Controller
         return view('frontend.pages.catalog', compact('products', 'allCategories', 'activeCategory', 'categorySlug', 'search'));
     }
 
-    /**
-     * Menampilkan halaman detail produk berdasarkan slug.
-     */
     public function show($slug)
     {
-        // Cari produk yang aktif beserta relasi kategori dan gambarnya
         $product = Product::with(['category', 'images'])
             ->where('slug', $slug)
             ->where('is_active', 1)
-            ->firstOrFail(); // Otomatis return 404 jika tidak ditemukan
+            ->firstOrFail(); 
 
-        // Ambil list semua gambar produk yang diurutkan (is_primary dahulu, lalu sort_order)
         $images = $product->images()
             ->orderBy('is_primary', 'desc')
             ->orderBy('sort_order', 'asc')
             ->get();
 
-        // Ambil maksimal 4 produk terkait dari kategori yang sama (kecuali produk itu sendiri) secara acak
         $relatedProducts = Product::with(['images'])
             ->where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
@@ -60,7 +54,6 @@ class ProductController extends Controller
             ->limit(4)
             ->get();
 
-        // Tentukan gambar utama di halaman awal detail
         $mainImg = $images->first()->image ?? null;
 
         return view('frontend.pages.product', compact('product', 'images', 'relatedProducts', 'mainImg'));

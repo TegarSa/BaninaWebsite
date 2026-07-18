@@ -51,11 +51,20 @@ class BannerController extends Controller
         }
 
         $imgPath = null;
+
         if ($request->hasFile('image')) {
-            \Illuminate\Support\Facades\File::ensureDirectoryExists(public_path('assets/images/banners'));
+
             $file = $request->file('image');
-            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/banners'), $filename);
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/banners';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0775, true);
+            }
+
+            $file->move($destination, $filename);
+
             $imgPath = 'banners/' . $filename;
         }
 
@@ -108,14 +117,24 @@ class BannerController extends Controller
         }
 
         $imgPath = $banner->image;
+
         if ($request->hasFile('image')) {
-            if ($banner->image && file_exists(public_path('assets/images/' . $banner->image))) {
-                @unlink(public_path('assets/images/' . $banner->image));
-            }
 
             $file = $request->file('image');
-            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/banners'), $filename);
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/banners';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0775, true);
+            }
+
+            if ($banner->image && file_exists($destination . '/' . basename($banner->image))) {
+                unlink($destination . '/' . basename($banner->image));
+            }
+
+            $file->move($destination, $filename);
+
             $imgPath = 'banners/' . $filename;
         }
 
@@ -135,8 +154,10 @@ class BannerController extends Controller
     {
         $banner = Banner::findOrFail($id);
 
-        if ($banner->image && file_exists(public_path('assets/images/' . $banner->image))) {
-            @unlink(public_path('assets/images/' . $banner->image));
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/banners';
+
+        if ($banner->image && file_exists($destination . '/' . basename($banner->image))) {
+            unlink($destination . '/' . basename($banner->image));
         }
 
         $banner->delete();

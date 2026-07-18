@@ -87,10 +87,18 @@ class ProductController extends Controller
 
         // Proses Multi Upload Gambar
         if ($request->hasFile('images')) {
-            \Illuminate\Support\Facades\File::ensureDirectoryExists(public_path('assets/images/products'));
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/products';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0775, true);
+            }
+
             foreach ($request->file('images') as $key => $file) {
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('assets/images/products'), $filename);
+
+                $filename = time() . '_' . $file->getClientOriginalName();
+
+                $file->move($destination, $filename);
 
                 ProductImage::create([
                     'product_id' => $product->id,
@@ -155,10 +163,20 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('images')) {
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/products';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0775, true);
+            }
+
             $hasPrimary = $product->images()->where('is_primary', 1)->exists();
+
             foreach ($request->file('images') as $key => $file) {
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('assets/images/products'), $filename);
+
+                $filename = time() . '_' . $file->getClientOriginalName();
+
+                $file->move($destination, $filename);
 
                 ProductImage::create([
                     'product_id' => $product->id,
@@ -176,10 +194,14 @@ class ProductController extends Controller
     {
         $product = Product::with('images')->findOrFail($id);
 
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/products';
+
         foreach ($product->images as $img) {
-            $filePath = public_path('assets/images/' . $img->image);
+
+            $filePath = $destination . '/' . basename($img->image);
+
             if (file_exists($filePath)) {
-                @unlink($filePath);
+                unlink($filePath);
             }
         }
 
@@ -220,9 +242,12 @@ class ProductController extends Controller
     public function destroyImage($id, $imgId)
     {
         $img = ProductImage::where('id', $imgId)->where('product_id', $id)->firstOrFail();
-        $filePath = public_path('assets/images/' . $img->image);
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/products';
+
+        $filePath = $destination . '/' . basename($img->image);
+
         if (file_exists($filePath)) {
-            @unlink($filePath);
+            unlink($filePath);
         }
         $img->delete();
 

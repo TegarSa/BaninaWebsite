@@ -102,7 +102,7 @@
         }
 
         .back-to-top-btn.show {
-            right: 36px;
+            right: 30px;
             opacity: 1;
             animation: pulseGlow 2s infinite ease-in-out;
         }
@@ -248,27 +248,12 @@
                     }
                 });
 
-                backToTopBtn.addEventListener('click', () => {
-                    const duration = 1000; 
-                    const startPosition = window.scrollY;
-                    const startTime = performance.now();
-
-                    function easeOutCubic(t) {
-                        return 1 - Math.pow(1 - t, 3);
-                    }
-
-                    function animation(currentTime) {
-                        const timeElapsed = currentTime - startTime;
-                        const progress = Math.min(timeElapsed / duration, 1);
-                        
-                        window.scrollTo(0, startPosition * (1 - easeOutCubic(progress)));
-
-                        if (timeElapsed < duration) {
-                            requestAnimationFrame(animation);
-                        }
-                    }
-
-                    requestAnimationFrame(animation);
+                backToTopBtn.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth' 
+                    });
                 });
             }
         });

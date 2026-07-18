@@ -1347,7 +1347,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
 }
 @media (max-width: 560px) {
-    .footer-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; } 
 }
 
 .footer-brand h3 {

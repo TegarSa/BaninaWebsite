@@ -11,7 +11,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        // Mengambil kategori sekalian menghitung jumlah produk terkait (product_count)
         $categories = Category::withCount('products')
             ->orderBy('sort_order', 'asc')
             ->orderBy('created_at', 'desc')
@@ -39,11 +38,20 @@ class CategoryController extends Controller
         }
 
         $imgPath = null;
+
         if ($request->hasFile('image')) {
-            \Illuminate\Support\Facades\File::ensureDirectoryExists(public_path('assets/images/categories'));
+
             $file = $request->file('image');
-            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/categories'), $filename);
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/categories';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0775, true);
+            }
+
+            $file->move($destination, $filename);
+
             $imgPath = 'categories/' . $filename;
         }
 
@@ -86,15 +94,24 @@ class CategoryController extends Controller
         }
 
         $imgPath = $category->image;
+
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
-            if ($category->image && file_exists(public_path('assets/images/' . $category->image))) {
-                @unlink(public_path('assets/images/' . $category->image));
-            }
 
             $file = $request->file('image');
-            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/categories'), $filename);
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/categories';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0775, true);
+            }
+
+            if ($category->image && file_exists($destination . '/' . basename($category->image))) {
+                unlink($destination . '/' . basename($category->image));
+            }
+
+            $file->move($destination, $filename);
+
             $imgPath = 'categories/' . $filename;
         }
 
@@ -113,8 +130,10 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        if ($category->image && file_exists(public_path('assets/images/' . $category->image))) {
-            @unlink(public_path('assets/images/' . $category->image));
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/categories';
+
+        if ($category->image && file_exists($destination . '/' . basename($category->image))) {
+            unlink($destination . '/' . basename($category->image));
         }
 
         $category->delete();

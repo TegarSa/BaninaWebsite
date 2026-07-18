@@ -57,27 +57,53 @@ class SettingController extends Controller
         }
 
         if ($request->hasFile('about_image')) {
-            File::ensureDirectoryExists(public_path('assets/images/about'));
-            $old = Setting::where('key', 'about_image')->first();
-            if ($old && $old->value && file_exists(public_path('assets/images/' . $old->value))) {
-                @unlink(public_path('assets/images/' . $old->value));
-            }
+
             $file = $request->file('about_image');
             $filename = 'about_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/about'), $filename);
-            Setting::updateOrCreate(['key' => 'about_image'], ['value' => 'about/' . $filename]);
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/about';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0775, true);
+            }
+
+            $old = Setting::where('key', 'about_image')->first();
+
+            if ($old && $old->value && file_exists($destination . '/' . basename($old->value))) {
+                unlink($destination . '/' . basename($old->value));
+            }
+
+            $file->move($destination, $filename);
+
+            Setting::updateOrCreate(
+                ['key' => 'about_image'],
+                ['value' => 'about/' . $filename]
+            );
         }
 
         if ($request->hasFile('cta_image')) {
-            File::ensureDirectoryExists(public_path('assets/images/cta'));
-            $old = Setting::where('key', 'cta_image')->first();
-            if ($old && $old->value && file_exists(public_path('assets/images/' . $old->value))) {
-                @unlink(public_path('assets/images/' . $old->value));
-            }
+
             $file = $request->file('cta_image');
             $filename = 'cta_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/cta'), $filename);
-            Setting::updateOrCreate(['key' => 'cta_image'], ['value' => 'cta/' . $filename]);
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/cta';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0775, true);
+            }
+
+            $old = Setting::where('key', 'cta_image')->first();
+
+            if ($old && $old->value && file_exists($destination . '/' . basename($old->value))) {
+                unlink($destination . '/' . basename($old->value));
+            }
+
+            $file->move($destination, $filename);
+
+            Setting::updateOrCreate(
+                ['key' => 'cta_image'],
+                ['value' => 'cta/' . $filename]
+            );
         }
 
         return redirect()->route('settings.index')->with('success', 'Pengaturan toko berhasil diperbarui.');
